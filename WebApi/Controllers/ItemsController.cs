@@ -94,7 +94,7 @@ namespace WebApi.Controllers
         {
             try
             {
-                var dbEntity = await this._dbContext.Items.FindAsync(entity.Id);
+                var dbEntity = await this._dbContext.Items.FindAsync(id);
                 if (dbEntity == null)
                 {
                     return this.NotFound($"Couldn't find the matching entity with id = {entity.Id}.");
