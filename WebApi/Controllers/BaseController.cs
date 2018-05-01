@@ -14,7 +14,7 @@ using WebApi.ViewModel;
 namespace WebApi.Controllers
 {
 
-    public class BaseController
+    public abstract class BaseController
         : Controller
     {
 
@@ -35,7 +35,7 @@ namespace WebApi.Controllers
             }
         }
 
-        public BaseController(APIDbContext dbContext, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> user)
+        protected BaseController(APIDbContext dbContext, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> user)
         {
             this._dbContext = dbContext;
             this.SignInManager = signInManager;
