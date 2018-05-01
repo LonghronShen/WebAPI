@@ -6,20 +6,22 @@ using WebApi.Data.User;
 
 namespace WebApi.Data
 {
-    public class APIDbContext: IdentityDbContext<ApplicationUser>
-    {
-        public APIDbContext(DbContextOptions<APIDbContext> options) : base(options)
-        {
 
-        } 
-        
-        //在 Entity Framework 中，实体集通常与数据表相对应，具体实体与表中的行相对应。
+    public class APIDbContext
+        : IdentityDbContext<ApplicationUser>
+    {
+
+        // 在 Entity Framework 中，实体集通常与数据表相对应，具体实体与表中的行相对应。
         #region 属性
         public DbSet<Item> Items { get; set; }
-        public DbSet<Comment> Comments { get; set; }
-        //  public DbSet<ApplicationUser> Users { get; set; }
 
+        public DbSet<Comment> Comments { get; set; }
         #endregion
+
+        public APIDbContext(DbContextOptions<APIDbContext> options)
+            : base(options)
+        {
+        }
 
         //配置对象实体间与数据库之间的关系，以及如何映射到数据库
         protected override void OnModelCreating(ModelBuilder builder)
@@ -41,6 +43,6 @@ namespace WebApi.Data
             base.OnModelCreating(builder);
         }
 
-
     }
+
 }

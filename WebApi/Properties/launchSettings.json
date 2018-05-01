@@ -18,12 +18,12 @@
     },
     "WebApi": {
       "commandName": "Project",
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "api/Account",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:9461/"
+      "applicationUrl": "http://localhost:9460/"
     }
   }
 }

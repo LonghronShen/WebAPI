@@ -10,15 +10,20 @@ using WebApi.Data.Items;
 
 namespace WebApi.Data.User
 {
-    public class ApplicationUser: IdentityUser
+
+    public class ApplicationUser
+        : IdentityUser
     {
 
         #region 属性
         public string DisplayName { get; set; }
+
         [Required]
         public DateTime CreateDate { get; set; }
+
         [Required]
         public DateTime LastModifiedDate { get; set; }
+
         [Required]
         public int Type { get; set; }
 
@@ -26,5 +31,7 @@ namespace WebApi.Data.User
 
         public virtual List<Comment> Comments { get; set; }
         #endregion
+
     }
+
 }

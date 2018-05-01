@@ -13,27 +13,35 @@ using WebApi.ViewModel;
 
 namespace WebApi.Controllers
 {
-   
-    public class BaseController : Controller
-    {
-        private APIDbContext dbContext;
-        private SignInManager<ApplicationUser> signInManager;
-        private UserManager<ApplicationUser> user;
-        public BaseController(APIDbContext dbContext, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> user)
-        {
-            this.dbContext = dbContext;
-            this.signInManager = signInManager;
-            this.user = user;
-        }
 
-        protected JsonSerializerSettings DefaultJsonSettings {
-            get {
-                return new JsonSerializerSettings()
+    public class BaseController
+        : Controller
+    {
+
+        protected readonly APIDbContext _dbContext;
+
+        protected SignInManager<ApplicationUser> SignInManager { get; }
+
+        protected UserManager<ApplicationUser> UserManager { get; }
+
+        protected JsonSerializerSettings DefaultJsonSettings
+        {
+            get
+            {
+                return JsonConvert.DefaultSettings?.Invoke() ?? new JsonSerializerSettings()
                 {
                     Formatting = Formatting.Indented
                 };
             }
         }
+
+        public BaseController(APIDbContext dbContext, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> user)
+        {
+            this._dbContext = dbContext;
+            this.SignInManager = signInManager;
+            this.UserManager = user;
+        }
+
         /// <summary>
         /// 获取当前用户ID
         /// </summary>
@@ -42,20 +50,19 @@ namespace WebApi.Controllers
         {
             if (!User.Identity.IsAuthenticated)
                 return "";
-           
-            var info = await signInManager.GetExternalLoginInfoAsync();
+
+            var info = await SignInManager.GetExternalLoginInfoAsync();
             if (info == null)
                 return User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            else {
-                var userInfo = await user.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
+            else
+            {
+                var userInfo = await UserManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
                 if (userInfo == null)
                     return "";
                 return userInfo.Id;
             }
-            
-              
-                
         }
-      
+
     }
+
 }
